@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <title>Dashboard | Library Holdings System</title>
+    <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="assets/css/master.css" rel="stylesheet">
+    <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background: #E2DEDE;
+        color: black; /* Set text color to black */
+    }
+    
+    /* Adjust the logo to fit within the sidebar */
+    .sidebar-header .app-logo {
+        width: 500%; /* Make the logo take up the full width of the sidebar */
+        height: auto; /* Maintain the aspect ratio of the logo */
+        max-width: 200px; /* Limit the logo width */
+        margin: 0 auto; /* Center the logo */
+    }
+    
+    .components li a {
+        padding: 10px 15px;
+        text-decoration: none;
+        color: black; /* Set the text color to black */
+    }
+    
+    /* Optional: Adjust links and other text to maintain readability */
+    .navbar-nav .nav-item a {
+        color: black; /* Set navbar text color to black */
+    }
+    
+    .ani {
+        transition: transform 0.3s ease-in-out; /* Smooth transition for the scale effect */
+    }
+
+    .ani:hover {
+        transform: scale(1.1); /* Scale up the card when hovered */
+    }
+</style>
+
+
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/img/letters.png" alt="logo" class="app-logo">
+            </div>
+            <ul class="list-unstyled components text-secondary">
+                <li class="active">
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="holdings.html"><i class="fas fa-book"></i> Library Holdings</a>
+                </li>
+                <li>
+                    <a href="authors.html"><i class="fas fa-users"></i> Authors</a>
+                </li>
+                <li>
+                    <a href="subjects.html"><i class="fas fa-file-alt"></i> Subjects</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="fas fa-user-friends"></i> Users</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="body" >
+            <!-- Navbar navigation component -->
+            <nav class="navbar navbar-expand-lg" style="border: none; box-shadow: none;">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>User</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="#" class="dropdown-item" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+                              <!-- Content -->
+                    <div class="content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 page-header">
+                                    <div class="page-pretitle">Overview</div>
+                                    <h2 class="page-title">Dashboard</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+                                    <div class="card ani">
+                                        <div class="content">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="icon-big text-center">
+                                                        <i class="teal fas fa-book"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="detail">
+                                                        <p class="detail-subtitle">Total Library Holdings</p>
+                                                        <span class="number" id="holdingcounts"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+                                    <div class="card ani">
+                                        <div class="content">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="icon-big text-center">
+                                                        <i class="olive fas fa-file-alt"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="detail">
+                                                        <p class="detail-subtitle">Total Subjects</p>
+                                                        <span class="number" id="subjectcounts"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+                                    <div class="card ani">
+                                        <div class="content">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="icon-big text-center">
+                                                        <i class="violet fas fa-users"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="detail">
+                                                        <p class="detail-subtitle">Total Authors</p>
+                                                        <span class="number" id="authorcounts"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+                                    <div class="card ani">
+                                        <div class="content">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="icon-big text-center">
+                                                        <i class="orange fas fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="detail">
+                                                        <p class="detail-subtitle">User Logs</p>
+                                                        <span class="number" id="logcounts">75</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-header" style="background-color: #FEB440; border: none;"><b>ACTIVITY LOGS</b></div>
+                                    <div class="card-body">
+                                        <p class="card-title"></p>
+                                        <table class="table table-hover" id="dataTables-example" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Activity</th>
+                                                    <th>Timestamp</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chartsjs/Chart.min.js"></script>
+    <script src="assets/js/dashboard-charts.js"></script>
+    <script src="assets/vendor/datatables/datatables.min.js"></script>
+
+    <script src="assets/js/get-set-cookie.js"></script>
+    <script src="assets/js/check-cookie.js"></script>
+    <script src="assets/js/logout.js"></script>
+
+    <script src="assets/js/dashboard/initiate-datatables.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

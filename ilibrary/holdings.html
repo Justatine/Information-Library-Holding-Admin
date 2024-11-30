@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <title>Holdings | Library Holdings System</title>
+    <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="assets/css/master.css" rel="stylesheet">
+    <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background: #E2DEDE;
+        color: black; /* Set text color to black */
+    }
+    
+    /* Adjust the logo to fit within the sidebar */
+    .sidebar-header .app-logo {
+        width: 500%; /* Make the logo take up the full width of the sidebar */
+        height: auto; /* Maintain the aspect ratio of the logo */
+        max-width: 200px; /* Limit the logo width */
+        margin: 0 auto; /* Center the logo */
+    }
+    
+    .components li a {
+        padding: 10px 15px;
+        text-decoration: none;
+        color: black; /* Set the text color to black */
+    }
+    
+    /* Optional: Adjust links and other text to maintain readability */
+    .navbar-nav .nav-item a {
+        color: black; /* Set navbar text color to black */
+    }
+    </style>
+
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/img/letters.png" alt="logo" class="app-logo">
+            </div>
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li class="active">
+                    <a href="holdings.html"><i class="fas fa-book"></i> Library Holdings</a>
+                </li>
+                <li>
+                    <a href="authors.html"><i class="fas fa-users"></i> Authors</a>
+                </li>
+                <li>
+                    <a href="subjects.html"><i class="fas fa-file-alt"></i> Subjects</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="fas fa-user-friends"></i> Users</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="body" >
+            <!-- Navbar navigation component -->
+            <nav class="navbar navbar-expand-lg" style="border: none; box-shadow: none;">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>User</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="#" class="dropdown-item" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            
+            <!-- Content -->
+            <div class="content">
+                <div class="container">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-header" style="background-color: #FEB440; border: none;"><b>LIBRARY HOLDINGS</b></div>
+                                    <div class="card-body">
+                                        <p class="card-title"></p>
+
+                                        <div class="col-lg-6"><!--MODAL -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Book</button>
+                                            <div class="modal fade" id="exampleModal" role="dialog" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title">Add new book</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body text-start">
+                                                    <form accept-charset="utf-8" id="addBookForm">
+                                                        <div class="row">
+                                                            <!-- Title and Accession Number -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="title" class="form-label">Title</label>
+                                                                <input type="text" name="title" placeholder="Title" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="acs_num" class="form-label">Accession Number</label>
+                                                                <input type="number" name="acs_num" placeholder="Accession Number" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <!-- Call Number and Year Published -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="call_num" class="form-label">Call Number</label>
+                                                                <input type="text" name="call_num" placeholder="Call Number" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="pub_year" class="form-label">Year Published</label>
+                                                                <select name="pub_year" class="form-control">
+                                                                    <option value="" disabled selected>Select Year</option>
+                                                                    <script>
+                                                                        const currentYear = new Date().getFullYear();
+                                                                        for (let year = currentYear; year >= 1900; year--) {
+                                                                            document.write(`<option value="${year}">${year}</option>`);
+                                                                        }
+                                                                    </script>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <div class="row">
+                                                            <!-- Copies and Available Copies -->
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="copies" class="form-label">Copies</label>
+                                                                <input type="number" name="copies" placeholder="Copies" min="0" class="form-control">
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="av_copies" class="form-label">Available Copies</label>
+                                                                <input type="number" name="av_copies" placeholder="Available Copies" min="0" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <div class="row">
+                                                            <!-- Author and Category -->
+                                                            <div class="col-md-12 mb-3">
+                                                                <label for="auth" class="form-label">Author/s</label>
+                                                                <input type="text" name="authors" id="authors" placeholder="Author/s" class="form-control">
+                                                                <!-- <select name="author" id="auth" class="form-control">
+                                                                    <option value="">Select Author</option>
+                                                                </select> -->
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <div class="mb-3">
+                                                            <label for="subjects" class="form-label">Subjects</label>
+                                                            <input type="text" name="subjects" id="subjects" placeholder="subjects" class="form-control">
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <!-- Sub Name, Course, Department, Keyword -->
+                                                            <!-- <div class="col-md-6 mb-3">
+                                                                <label for="sub_name" class="form-label">Sub Name</label>
+                                                                <input type="text" name="sub_name" placeholder="Sub Name" class="form-control">
+                                                            </div> -->
+                                                            <div class="col-md-12 mb-3">
+                                                                <label for="course" class="form-label">Course</label>
+                                                                <input type="text" name="course" placeholder="Course" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="department" class="form-label">Department</label>
+                                                                <select name="department" id="department" class="form-control">
+                                                                    <option value="">Select Department</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label for="keyword" class="form-label">Keyword</label>
+                                                                <input type="text" name="keyword" placeholder="Keyword" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                
+                                                        <div class="mb-3">
+                                                            <button type="submit" class="btn btn-primary">Add Book</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                            <!-- EDIT MODAL -->
+                                            <div class="modal fade" id="editModal" role="dialog" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title">Edit new book</h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-start">
+                                                      <form accept-charset="utf-8" id="editBookForm">
+                                                          <div class="row">
+                                                              <!-- Title and Accession Number -->
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="title1" class="form-label">Title</label>
+                                                                  <input type="text" id="edit_title" name="edit_title" placeholder="Title" class="form-control">
+                                                              </div>
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="acs_num1" class="form-label">Accession Number</label>
+                                                                  <input type="text" id="edit_accss_num" name="edit_accss_num" placeholder="Accession Number" class="form-control">
+                                                              </div>
+                                                          </div>
+                                                          <div class="row">
+                                                              <!-- Call Number and Year Published -->
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="call_num1" class="form-label">Call Number</label>
+                                                                  <input type="text" id="edit_call_num" name="edit_call_num" placeholder="Call Number" class="form-control">
+                                                              </div>
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="edit_published_year" class="form-label">Year Published</label>
+                                                                    <select id="edit_published_year" name="edit_published_year" class="form-control">
+                                                                      <option value="" disabled selected>Select Year</option>
+                                                                      <script>
+                                                                          const currentYear1 = new Date().getFullYear();
+                                                                          for (let year = currentYear; year >= 1900; year--) {
+                                                                              document.write(`<option value="${year}">${year}</option>`);
+                                                                          }
+                                                                      </script>
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                  
+                                                          <div class="row">
+                                                              <!-- Copies and Available Copies -->
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="edit_copies" class="form-label">Copies</label>
+                                                                  <input type="number" id="edit_copies" name="edit_copies" placeholder="Copies" min="0" class="form-control">
+                                                              </div>
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="edit_av_copies" class="form-label">Available Copies</label>
+                                                                  <input type="number" id="edit_av_copies" name="edit_av_copies" placeholder="Available Copies" min="0" class="form-control">
+                                                              </div>
+                                                          </div>
+                                                  
+                                                          <div class="row">
+                                                              <!-- Author and Category -->
+                                                              <div class="col-md-12 mb-3">
+                                                                  <label for="edit_author" class="form-label">Author</label>
+                                                                  <input type="text" name="edit_authors" id="edit_authors" placeholder="Author/s" class="form-control">
+                                                                  <!-- <select class="form-control" id="auth1" name="edit_author" required>
+                                                                      <option value="">Select Author</option>
+                                                                  </select> -->
+                                                              </div>
+                                                          </div>
+                                                  
+                                                          <div class="mb-3">
+                                                              <label for="edit_subjects" class="form-label">Subjects</label>
+                                                              <input type="text" id="edit_subjects" name="edit_subjects" placeholder="subjects" class="form-control">
+                                                          </div>
+                                                  
+                                                          <div class="row">
+                                                              <!-- Sub Name, Course, Department, Keyword -->
+                                                              <!-- <div class="col-md-6 mb-3">
+                                                                  <label for="edit_sub_name" class="form-label">Sub Name</label>
+                                                                  <input type="text" id="edit_sub_name" name="edit_sub_name" placeholder="Sub Name" class="form-control">
+                                                              </div> -->
+                                                              <div class="col-md-12 mb-3">
+                                                                  <label for="edit_course" class="form-label">Course</label>
+                                                                  <input type="text" id="edit_course" name="edit_course" placeholder="Course" class="form-control">
+                                                              </div>
+                                                          </div>
+                                                          <div class="row">
+                                                              <div class="col-md-6 mb-3">
+                                                                <label for="edit_department" class="form-label">Department</label>
+                                                                <select name="edit_department" id="edit_department" class="form-control">
+                                                                    <option value="" disabled selected>Select Department</option>
+                                                                </select>
+                                                              </div>
+                                                              <div class="col-md-6 mb-3">
+                                                                  <label for="edit_keyword" class="form-label">Keyword</label>
+                                                                  <input type="text" id="edit_keyword" name="edit_keyword" placeholder="Keyword" class="form-control">
+                                                              </div>
+                                                          </div>
+                                                  
+                                                          <div class="mb-3">
+                                                              <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                          </div>
+                                                      </form>
+                                                  </div>
+                                                  
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                </div>
+                            </p>
+
+                                        <table class="table table-hover" id="holdings-table" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hold ID</th>
+                                                    <th>Title</th>
+                                                    <th>Accession Number</th>
+                                                    <th>Call Number</th>
+                                                    <th>Year Published</th>
+                                                    <th>Copies</th>
+                                                    <th>Available Copies</th>
+                                                    <th>Course</th>
+                                                    <th>Department</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chartsjs/Chart.min.js"></script>
+    <script src="assets/js/dashboard-charts.js"></script>
+    <script src="assets/vendor/datatables/datatables.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.31.3/tagify.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.31.3/tagify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="assets/js/get-set-cookie.js"></script>
+    <script src="assets/js/check-cookie.js"></script>
+    <script src="assets/js/logout.js"></script>
+
+    <script src="assets/js/main.js"></script>   
+    <script src="assets/js/holdings/initiate-datatables.js"></script>
+
+    <script src="assets/js/holdings/tag.js"></script>
+    <!-- <script src="assets/js/holdings/options.js"></script> -->
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

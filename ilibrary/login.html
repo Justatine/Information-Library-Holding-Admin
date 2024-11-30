@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <title>Login | Library Holdings System</title>
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/auth.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #FEB440 50%, #E79B25 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        .auth-content {
+            width: 100%;
+            max-width: 400px; /* Set max width for medium card size */
+        }
+
+        .card {
+            border-radius: 10px; /* Optional: rounded corners for the card */
+        }
+
+        .card-body {
+            padding: 2rem; /* Adjust padding inside the card */
+        }
+
+        .brand {
+            max-width: 50%; /* Make sure the logo scales to fit the container */
+            height: auto; /* Maintain the aspect ratio */
+            margin-bottom: 20px; /* Optional: add space below the logo */
+        }
+         /* Custom Button Styles */
+         .btn-custom {
+            background-color: #FEB440;
+            color: black;
+            border-radius: 30px; /* Rounded corners */
+            padding: 12px 24px;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Transition for smooth hover effect */
+            width: 50%; 
+        }
+
+        .btn-custom:hover {
+            background-color: #E79B25; /* Darker color on hover */
+            transform: translateY(-2px); /* Optional: adds a subtle lifting effect */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="auth-content">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <img class="brand" src="assets/img/logo.png" alt="bootstraper logo">
+                    <h6 class="mb-4 text-muted">Login to your account</h6>
+                    <form action="" method="">
+                        <div class="mb-3 text-start">
+                            <input type="email" class="form-control" placeholder="Enter ID Number" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <input type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button class="btn btn-custom shadow-2 mb-4">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

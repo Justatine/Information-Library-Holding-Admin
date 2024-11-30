@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <title>Subjects | Library Holdings System</title>
+    <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="assets/css/master.css" rel="stylesheet">
+    <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+
+</head>
+
+<style>
+    body {
+        background: #E2DEDE;
+        color: black; /* Set text color to black */
+    }
+    
+    /* Adjust the logo to fit within the sidebar */
+    .sidebar-header .app-logo {
+        width: 500%; /* Make the logo take up the full width of the sidebar */
+        height: auto; /* Maintain the aspect ratio of the logo */
+        max-width: 200px; /* Limit the logo width */
+        margin: 0 auto; /* Center the logo */
+    }
+    
+    .components li a {
+        padding: 10px 15px;
+        text-decoration: none;
+        color: black; /* Set the text color to black */
+    }
+    
+    /* Optional: Adjust links and other text to maintain readability */
+    .navbar-nav .nav-item a {
+        color: black; /* Set navbar text color to black */
+    }
+    </style>
+
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/img/letters.png" alt="logo" class="app-logo">
+            </div>
+
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="holdings.html"><i class="fas fa-book"></i> Library Holdings</a>
+                </li>
+                <li>
+                    <a href="authors.html"><i class="fas fa-users"></i> Authors</a>
+                </li>
+                <li class="active"> 
+                    <a href="subjects.html"><i class="fas fa-file-alt"></i> Subjects</a>
+                </li>
+                <li>
+                    <a href="users.html"><i class="fas fa-user-friends"></i> Users</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="body" >
+            <!-- Navbar navigation component -->
+            <nav class="navbar navbar-expand-lg" style="border: none; box-shadow: none;">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>User</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="#" class="dropdown-item" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            
+                                    <!-- Content -->
+                                        <div class="content">
+                                            <div class="container">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="card">
+                                                        <!-- Card Header -->
+                                                        <div class="card-header" style="background-color: #FEB440; border: none;">
+                                                            <b>SUBJECTS</b>
+                                                        </div>
+                                        
+                                                        <!-- Card Body -->
+                                                        <div class="card-body">
+                                                            <!-- Button to Trigger Modal -->
+                                                            <div class="col-lg-6 mb-3">
+                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                    Add Subject
+                                                                </button>
+                                                            </div>
+                                        
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <!-- Modal Header -->
+                                                                        <div class="modal-header" style="background-color: #FEB440;">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Add New Subject</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                        
+                                                                        <!-- Modal Body -->
+                                                                        <div class="modal-body">
+                                                                            <form id="addSubjectForm">
+                                                                                <div class="row">
+                                                                                    <!-- Subject Name -->
+                                                                                    <div class="mb-3">
+                                                                                        <label for="sub_name" class="form-label">Subject Code</label>
+                                                                                        <input type="text" name="sub_name" placeholder="Subject code" class="form-control">
+                                                                                    </div>
+                                        
+                                                                                    <!-- Description -->
+                                                                                    <div class="mb-3">
+                                                                                        <label for="sub_desc" class="form-label">Description</label>
+                                                                                        <input type="text" name="sub_desc" placeholder="Description" class="form-control">
+                                                                                    </div>
+                                        
+                                                                                <div class="row">
+                                                                                    <!-- Year Level -->
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="year_level" class="form-label">Year Level</label>
+                                                                                            <select name="year_level" id="year_level" class="form-control">
+                                                                                                <option value="" disabled selected>Select Year Level</option>
+                                                                                                <option value="1">1</option>
+                                                                                                <option value="2">2</option>
+                                                                                                <option value="3">3</option>
+                                                                                                <option value="4">4</option>
+                                                                                                <option value="5">5</option>
+                                                                                                <option value="6">6</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <!-- Academic Year -->
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="acad_year" class="form-label">Academic Year</label>
+                                                                                            <input type="text" name="acad_year" placeholder="Academic year" class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                  <div class="mb-3 position-relative">
+                                                                                        <label for="semester" class="form-label">Semester</label>
+                                                                                        <div class="position-relative">
+                                                                                            <select name="semester" id="semester" class="form-control">
+                                                                                                <option value="" disabled selected>Select Semester</option>
+                                                                                                <option value="First Semester">First Semester</option>
+                                                                                                <option value="Second Semester">Second Semester</option>
+                                                                                                <option value="Summer">Summer</option>
+                                                                                            </select>
+                                                                                            <i class="fas fa-chevron-down position-absolute" 
+                                                                                               style="top: 50%; right: 10px; transform: translateY(-50%); pointer-events: none;"></i>
+                                                                                        </div>
+                                                                                    </div>
+
+                                        
+                                                                                    <!-- Course -->
+                                                                                      <div class="mb-3">
+                                                                                        <label for="course" class="form-label">Course</label>
+                                                                                        <input type="text" name="course" placeholder="Course" class="form-control">
+                                                                                    </div>
+                                                                                    
+                                                                                    <!-- Submit Button -->
+                                                                                    <div class="d-flex justify-content-center mt-2">
+                                                                                        <button type="submit" class="btn btn-primary">Add Subject</button>
+                                                                                    </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                        </div>
+                                        
+                                                                        <!-- Modal Footer -->
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                      <!-- Edit Subject Modal -->
+                                                            <div class="modal fade" id="editModal" role="dialog" tabindex="-1">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color: #FEB440;">
+                                                                            <h5 class="modal-title">Edit Subject</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body text-start">
+                                                                            <form id="editBookForm">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6 mb-3">
+                                                                                        <label for="sub_name" class="form-label">Subject Code</label>
+                                                                                        <input type="text" id="edit_sub_name" name="sub_name" class="form-control">
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <label for="sub_desc" class="form-label">Description</label>
+                                                                                        <input type="text" id="edit_sub_desc" name="sub_desc" class="form-control">
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="year_level" class="form-label">Year Level</label>
+                                                                                                <select id="edit_year_level" name="year_level" class="form-control">
+                                                                                                    <option value="1">1</option>
+                                                                                                    <option value="2">2</option>
+                                                                                                    <option value="3">3</option>
+                                                                                                    <option value="4">4</option>
+                                                                                                    <option value="5">5</option>
+                                                                                                    <option value="6">6</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="acad_year" class="form-label">Academic Year</label>
+                                                                                                <input type="text" id="edit_acad_year" name="acad_year" class="form-control">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <label for="semester" class="form-label">Semester</label>
+                                                                                        <select id="edit_semester" name="semester" class="form-control">
+                                                                                            <option value="First semester">First Semester</option>
+                                                                                            <option value="Second semester">Second Semester</option>
+                                                                                            <option value="Summer">Summer</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="mb-3">
+                                                                                        <label for="course" class="form-label">Course</label>
+                                                                                        <input type="text" id="edit_course" name="course" class="form-control">
+                                                                                    </div>
+                                                                                </div>
+                                                                        
+           
+                                                  
+                                                          <div class="mb-3">
+                                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                          </div>
+                                                            </form>
+                                                                       
+                                                  </div>
+                                                  
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                  </div>
+                                                </div>
+                                              
+                                </div>
+                            <!--</p>-->
+                
+                                        
+                                                            <!-- Table -->
+                                                            <div class="table-responsive mt-4">
+                                                                <table class="table table-hover" id="dataTables-example1" width="100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Subject ID</th>
+                                                                            <th>Subject Code</th>
+                                                                            <th>Subject Description</th>
+                                                                            <th>Year Level</th>
+                                                                            <th>A.Y.</th>
+                                                                            <th>Semester</th>
+                                                                            <th>Course</th>
+                                                                            <th>Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <!-- Dynamic Rows will be inserted here -->
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chartsjs/Chart.min.js"></script>
+    <script src="assets/js/dashboard-charts.js"></script>
+    <script src="assets/vendor/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/subjects/initiate-datatables.js"></script>
+
+    <script src="assets/js/get-set-cookie.js"></script>
+    <script src="assets/js/check-cookie.js"></script>
+    <script src="assets/js/logout.js"></script>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

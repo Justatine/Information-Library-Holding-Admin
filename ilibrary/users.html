@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <title>Users | Library Holdings System</title>
+    <link href="assets/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="assets/css/master.css" rel="stylesheet">
+    <link href="assets/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background: #E2DEDE;
+        color: black; /* Set text color to black */
+    }
+    
+    /* Adjust the logo to fit within the sidebar */
+    .sidebar-header .app-logo {
+        width: 500%; /* Make the logo take up the full width of the sidebar */
+        height: auto; /* Maintain the aspect ratio of the logo */
+        max-width: 200px; /* Limit the logo width */
+        margin: 0 auto; /* Center the logo */
+    }
+    
+    .components li a {
+        padding: 10px 15px;
+        text-decoration: none;
+        color: black; /* Set the text color to black */
+    }
+    
+    /* Optional: Adjust links and other text to maintain readability */
+    .navbar-nav .nav-item a {
+        color: black; /* Set navbar text color to black */
+    }
+    </style>
+
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/img/letters.png" alt="logo" class="app-logo">
+            </div>
+
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="holdings.html"><i class="fas fa-book"></i> Library Holdings</a>
+                </li>
+                <li>
+                    <a href="authors.html"><i class="fas fa-users"></i> Authors</a>
+                </li>
+                <li>
+                    <a href="subjects.html"><i class="fas fa-file-alt"></i> Subjects</a>
+                </li>
+                <li class="active">
+                    <a href="users.html"><i class="fas fa-user-friends"></i> Users</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="body" >
+            <!-- Navbar navigation component -->
+            <nav class="navbar navbar-expand-lg" style="border: none; box-shadow: none;">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>User</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="#" class="dropdown-item" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            
+            <!-- Content -->
+            <div class="content">
+                <div class="container">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-header" style="background-color: #FEB440; border: none;"><b>USERS</b></div>
+                                    <div class="card-body">
+                                        <p class="card-title"></p>
+
+                                        <div class="col-lg-6"><!--MODAL -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add User</button>
+                                            <div class="modal fade" id="exampleModal" role="dialog" tabindex="-1">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title">Add new user</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-body text-start">
+                                                    <form accept-charset="utf-8" id="addUsersForm">
+                                                        <div class="row">
+                                                            <!-- Title and Accession Number -->
+                                                            <div class="col-md ">
+                                                                <label for="idnum" class="form-label">ID</label>
+                                                                <input type="text" name="idnum" placeholder="ID Number" class="form-control">
+
+                                                                <label for="fname" class="form-label">First name</label>
+                                                                <input type="text" name="fname" placeholder="First name" class="form-control">
+                                                                
+                                                                <label for="lname" class="form-label">Last name</label>
+                                                                <input type="text" name="lname" placeholder="Last name" class="form-control">
+                                                                
+                                                                <label for="email" class="form-label">Email</label>
+                                                                <input type="email" name="email" placeholder="Email" class="form-control">
+                                                                
+                                                                <label for="password" class="form-label">Password</label>
+                                                                <input type="password" name="password" placeholder="Password" class="form-control">
+                                                                
+                                                                <label for="conf_password" class="form-label">Confirm password</label>
+                                                                <input type="password" name="conf_password" placeholder="Confirm password" class="form-control">
+                                                            </div>
+                                                            <div class="mb-3 mt-4">
+                                                                <button type="submit" class="btn btn-primary">Add user</button>
+                                                            </div>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                                
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div class="modal fade" id="exampleModal1" role="dialog" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title">Edit user</h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-start">
+                                                      <form accept-charset="utf-8" id="editUsersForm">
+                                                          <div class="row">
+                                                              <!-- Title and Accession Number -->
+                                                              <div class="col-md ">
+                                                                  <label for="fname1" class="form-label">First name</label>
+                                                                  <input type="text" name="fname1" placeholder="First name" class="form-control">
+
+                                                                  <label for="lname1" class="form-label">Last name</label>
+                                                                  <input type="text" name="lname1" placeholder="Last name" class="form-control">
+
+                                                                  <label for="email1" class="form-label">Email</label>
+                                                                  <input type="email" name="email1" placeholder="Email" class="form-control">
+
+                                                                  <label for="password1" class="form-label">Password</label>
+                                                                  <input type="password" name="password1" placeholder="Password" class="form-control">
+
+                                                                  <label for="conf_password1" class="form-label">Confirm password</label>
+                                                                  <input type="password" name="conf_password1" placeholder="Confirm password" class="form-control">
+                                                              </div>
+                                                              <div class="mb-3 mt-4">
+                                                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                                              </div>
+                                                      </form>
+                                                      </div>
+                                                  </div>
+                                                  
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </p>
+
+                                        <table class="table table-hover" id="dataTables-example" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Admin ID</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Email</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chartsjs/Chart.min.js"></script>
+    <script src="assets/js/dashboard-charts.js"></script>
+    <script src="assets/vendor/datatables/datatables.min.js"></script>
+
+    <script src="assets/js/get-set-cookie.js"></script>
+    <script src="assets/js/check-cookie.js"></script>
+    <script src="assets/js/logout.js"></script>
+
+    <script src="assets/js/users/initiate-datatables.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>

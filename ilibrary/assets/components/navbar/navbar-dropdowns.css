@@ -1,0 +1,40 @@
+.nav-dropdown .nav-link {
+   
+    line-height: 1.42857;
+    padding: 1rem 0 1rem 1rem !important;
+}
+
+
+.nav-dropdown.show a {
+    color: #fff;
+}
+
+.nav-dropdown .nav-link::after {
+    display: none;
+}
+
+.nav-dropdown .nav-link-menu {
+    position: absolute;
+    border: none;
+    min-width: 220px;
+    padding: 0;
+    line-height: 1.4;
+    box-shadow: 0 1px 10px 0 rgba(69, 90, 100, 0.2);
+    margin-top: -5px;
+}
+
+
+.nav-dropdown .nav-link-menu .nav-list {
+    padding: 5px 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-dropdown .nav-link-menu .nav-list li {
+    line-height: 1.2;
+}
+
+
+.nav-dropdown .dropdown-divider {
+    margin: 3px 0;
+}
