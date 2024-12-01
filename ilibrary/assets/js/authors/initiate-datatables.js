@@ -1,23 +1,43 @@
-(function() {
-    'use strict';
-
-    let authid = null;
-    const accId = getCookie('cookie-adminId');
-
-    // Initialize DataTable
-    const dataTable = $('#dataTables-example').DataTable({
+$(document).ready(function () {
+    // console.log(url);
+        // Initialize DataTable
+    const dataTable = $('#authors-table').DataTable({
         responsive: true,
         pageLength: 20,
         lengthChange: false,
         searching: true,
         ajax: {
-            url: 'https://ilibrary.zreky.muccs.host/back-end/api-author/v1/authors',
-            dataSrc: ''
+            // http://localhost/ilibrary/back-end/api-author/authors.php
+            url: url+'api-author/authors.php',
+            dataSrc: function(json) {
+                // console.log('Received data:', json);
+                return Array.isArray(json) ? json : (json.data || []);
+            },
+            error: function (xhr, error, thrown) {
+                console.error('DataTables Ajax Error:', error, thrown);
+                console.log('XHR Response:', xhr.responseText); // Add more error details
+            }
         },
         columns: [
             { data: 'author_id' },
-            { data: 'fname' },
-            { data: 'lname' },
+            { 
+                data: 'fname',
+                render: function(data) {
+                    return data ? data : '<i>N/A</i>';
+                }
+            },
+            { 
+                data: 'lname',
+                render: function(data) {
+                    return data ? data : '<i>N/A</i>';
+                }
+            },
+            { 
+                data: 'corporate_author',
+                render: function(data) {
+                    return data ? data : '<i>N/A</i>';
+                }
+            },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -28,110 +48,177 @@
                 }
             }
         ],
-        ordering: true
+        ordering: true,
+        initComplete: function(settings, json) {
+            console.log('DataTable data:', json);
+        }
     });
 
-    // Handle Add Author form submission
-    $('#addAuthorForm').on('submit', function(e) {
-        e.preventDefault();
+    var editId = "";
 
-        // Collect form data
-        const formData = {
-            fname: $('input[name="fname"]').val(),
-            lname: $('input[name="lname"]').val()
-        };
-
-        // Perform AJAX POST to add the new author
+    $(document).on("click", ".delete-btn", function () {
+        const id = $(this).data('id')
+        console.log(id) 
+        var data = {id:id}
         $.ajax({
-            type: 'POST',
-            url: `https://ilibrary.zreky.muccs.host/back-end/api-author/v1/authors/${accId}`, // Adjust the URL if necessary
-            data: formData,
+            type: "DELETE",
+            url: url+"api-author/delete-author.php",
+            data: JSON.stringify(data),
             dataType: "json",
-            success: function(response) {
-                console.log("Author added:", response);
-                alert("Author added successfully!");
-                $('#exampleModal').modal('hide');  // Close the modal
-                $('#addAuthorForm')[0].reset();  // Reset the form
-                dataTable.ajax.reload();  // Reload the DataTable to show the new author
+            success: function (response) {
+                if(response.success){
+                    Swal.fire({
+                        title: 'Success!',  
+                        text: 'Author deleted successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        dataTable.ajax.reload();  
+                    });
+                } 
+            }
+        });        
+    });
+    
+    $(document).on("submit", "#editAuthorForm", function (e) {
+        e.preventDefault();
+    
+        var formData = new FormData(this);
+        formData.append("id", editId);
+    
+        // Convert FormData to JSON
+        var data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+            console.log(`${key}: ${value}`);
+        });
+    
+        // Send JSON data via AJAX
+        $.ajax({
+            type: "PUT",
+            url: url + 'api-author/edit-authors.php',
+            data: JSON.stringify(data),
+            contentType: "application/json", 
+            processData: false, 
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $('#editModal').modal('hide');  
+                    $('#editAuthorForm')[0].reset(); 
+
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Author updated successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        dataTable.ajax.reload();  
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.error || 'Failed to update the author.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             },
-            error: function(error) {
-                console.error("Error adding author:", error);
-                alert("Error adding the author. Please try again.");
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An unexpected error occurred.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     });
 
-    $('#dataTables-example').on('click', '.edit-btn', function () {
-        authid = $(this).data('id');
-    
+    $(document).on("click", ".edit-btn", function () {
+        const holdId = $(this).data('id');
+        editId = holdId;
+        console.log('editId', editId)
+        
+        $('#editModal').modal('show');
         $.ajax({
             type: 'GET',
-            url: `https://ilibrary.zreky.muccs.host/back-end/api-author/v1/authors/${authid}`,
-            dataType: 'json',
-            success: function(auth) {
-
-                // Fill form fields with book data
-                $('input[name="fname1"]').val(auth[0].fname);
-                $('input[name="lname1"]').val(auth[0].lname);
-
-                // Show the modal
-                $('#exampleModal1').modal('show');
-            },
-            error: function(error) {
-                console.error("Error fetching book details:", error);
-                alert("Error fetching book details. Please try again.");
-            }
-        });
-    });
-
-    $('#editAuthorForm').on('submit', function (e) {
-        e.preventDefault();
-
-        const formData = {
-            fname: $('input[name="fname1"]').val(),
-            lname: $('input[name="lname1"]').val(),
-        };
-
-        $.ajax({
-            type: 'PUT',
-            url: `https://ilibrary.zreky.muccs.host/back-end/api-author/v1/authors/${authid}/${accId}`,
-            data: JSON.stringify(formData),
-            contentType: 'application/json',
+            url: url + 'api-author/authors.php',
+            data: { id: holdId },
             dataType: 'json',
             success: function(response) {
-                console.log("Author updated:", response);
-                alert("Author updated successfully!");
-                $('#exampleModal1').modal('hide');
-                $('#editAuthorForm')[0].reset();
-                dataTable.ajax.reload();
+                console.log(response.data)
+
+                $("#fname1").val(response.data.fname);
+                $("#lname1").val(response.data.lname);
+                $("#corporate_author1").val(response.data.corporate_author);
+
             },
             error: function(error) {
-                console.error("Error updating book:", error);
-                alert("Error updating the book. Please try again.");
+                console.error("Error fetching author details:", error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Error fetching author details. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     });
 
-    $('#dataTables-example').on('click', '.delete-btn[data-id]', function () {
+    $(document).on("submit", "#addAuthorForm", function (e) {
+        e.preventDefault();
+    
+        var formData = new FormData(this);
+    
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+    
+        $.ajax({
+            type: "POST",
+            url: url + 'api-author/add-author.php',
+            data: formData,
+            processData: false, 
+            contentType: false, 
+            dataType: "json",
+            success: function (response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Author added successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    $('#addAuthorModal').modal('hide');
+                    $('#addAuthorForm')[0].reset();
+                    dataTable.ajax.reload();
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred during the request.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                console.error('Error:', xhr.responseText || status || error);
+            }
+        });
+    });
+    
+    function updateAuthorFields() {
+        const fname = $('#fname').val();
+        const lname = $('#lname').val();
+        const corporateAuthor = $('#corporate_author').val();
 
-        authid = $(this).data('id'); // Get the subject ID from the data attribute
-        
-        if (confirm("Are you sure you want to delete this author?")) {
-            // Send AJAX DELETE request
-            $.ajax({
-                url: `https://ilibrary.zreky.muccs.host/back-end/api-author/v1/authors/${authid}/${accId}`,
-                //url: `http://localhost/ilibrary/admin-side/back-end/api-holding/v1/holdings/${holdId}`,
-                type: 'DELETE',
-                success: function (response) {
-                    console.log(response);
-                    alert(response.msg);
-                    window.location.replace("authors.html");
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error occurred:', xhr, status, error);
-                    alert('Error occurred while deleting subject. Please try again.');
-                }
-            });
+        if (fname || lname) {
+            $('#corporate_author').prop('disabled', true);
+        } else if (corporateAuthor) {
+            $('#fname, #lname').prop('disabled', true);
+        } else {
+            $('#fname, #lname, #corporate_author').prop('disabled', false);
         }
-    });    
-})();
+    }
+
+    $('#fname, #lname, #corporate_author').on('input', updateAuthorFields);
+});

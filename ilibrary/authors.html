@@ -118,9 +118,14 @@
                                                             <!-- Title and Accession Number -->
                                                             <div class="col-md ">
                                                                 <label for="fname" class="form-label">First name</label>
-                                                                <input type="text" name="fname" placeholder="First name" class="form-control">
+                                                                <input type="text" name="fname" placeholder="First name" class="form-control" id="fname">
                                                                 <label for="lname" class="form-label">Last name</label>
-                                                                <input type="text" name="lname" placeholder="Last name" class="form-control">
+                                                                <input type="text" name="lname" placeholder="Last name" class="form-control" id="lname">
+                                                                <hr>
+                                                                    <p class="text-center">or</p>
+                                                                <hr>
+                                                                <label for="corporate_author" class="form-label">Corporate Author</label>
+                                                                <input type="text" name="corporate_author" placeholder="Corporate Author" class="form-control" id="corporate_author">
                                                             </div>
                                                             <div class="mb-3 mt-4">
                                                                 <button type="submit" class="btn btn-primary">Add Author</button>
@@ -136,7 +141,7 @@
                                               </div>
                                             </div>
 
-                                            <div class="modal fade" id="exampleModal1" role="dialog" tabindex="-1">
+                                            <div class="modal fade" id="editModal" role="dialog" tabindex="-1">
                                               <div class="modal-dialog">
                                                 <div class="modal-content">
                                                   <div class="modal-header">
@@ -149,9 +154,14 @@
                                                             <!-- Title and Accession Number -->
                                                             <div class="col-md ">
                                                                 <label for="fname1" class="form-label">First name</label>
-                                                                <input type="text" name="fname1" placeholder="First name" class="form-control">
+                                                                <input type="text" name="fname1" placeholder="First name" class="form-control" id="fname1">
                                                                 <label for="lname1" class="form-label">Last name</label>
-                                                                <input type="text" name="lname1" placeholder="Last name" class="form-control">
+                                                                <input type="text" name="lname1" placeholder="Last name" class="form-control" id="lname1">
+                                                                <hr>
+                                                                    <p class="text-center">or</p>
+                                                                <hr>
+                                                                <label for="corporate_author1" class="form-label">Corporate Author</label>
+                                                                <input type="text" name="corporate_author1" placeholder="Corporate Author" class="form-control" id="corporate_author1">
                                                             </div>
                                                             <div class="mb-3 mt-4">
                                                                 <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -169,12 +179,13 @@
                                 </div>
                             </p>
 
-                                        <table class="table table-hover" id="dataTables-example" width="100%">
+                                        <table class="table table-hover" id="authors-table" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th>Author ID</th>
                                                     <th>First Name</th>
                                                     <th>Last Name</th>
+                                                    <th>Corporate Author</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -201,6 +212,7 @@
     <script src="assets/js/check-cookie.js"></script>
     <script src="assets/js/logout.js"></script>
 
+    <script src="assets/js/main.js"></script>
     <script src="assets/js/authors/initiate-datatables.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
