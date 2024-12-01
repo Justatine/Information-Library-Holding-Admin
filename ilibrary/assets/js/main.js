@@ -7,4 +7,4 @@ function getUrlParameter(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "))
 }
 
-const url = "http://localhost/ilibrary/";
+const url = "http://localhost/ilibrary/back-end/";

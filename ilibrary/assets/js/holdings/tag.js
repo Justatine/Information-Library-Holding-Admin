@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     function fetchAuthors() {
         $.ajax({
-            url: url+'back-end/api-author/authors.php',
+            url: url+'api-author/authors.php',
             method: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -29,9 +29,9 @@ $(document).ready(function () {
 
     function loadSubjects() {
         $.ajax({
-            url: url+'back-end/api-subject/?p=v1/subjects',
-            // url: url+'back-end/api-subject/get-subject.php',
-            //url: "http://localhost/ilibrary/admin-side/back-end/api-subject/v1/subjects",  // Your API endpoint to get subjects
+            url: url+'api-subject/?p=v1/subjects',
+            // url: url+'api-subject/get-subject.php',
+            //url: "http://localhost/ilibrary/admin-side/api-subject/v1/subjects",  // Your API endpoint to get subjects
             method: 'GET',
             success: function (data) {
                 // Assuming the response is an array of subjects

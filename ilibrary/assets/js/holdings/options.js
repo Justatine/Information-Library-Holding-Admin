@@ -3,8 +3,8 @@ $(document).ready(function () {
     // Function to fetch authors and populate the select dropdown
     function fetchAuthors() {
         $.ajax({
-            url: url+'back-end/api-author/?p=v1/authors',
-            //url: 'http://localhost/ilibrary/admin-side/back-end/api-author/v1/authors',
+            url: url+'api-author/?p=v1/authors',
+            //url: 'http://localhost/ilibrary/admin-side/api-author/v1/authors',
             method: 'GET',
             dataType: 'json',
             success: function (data) {

@@ -57,99 +57,39 @@ try {
         );
 
         if ($sql->execute()) {
-            if (!empty($subjects)) {
-                $subjects_array = json_decode($subjects, true);
-
-                // Get current subjects for the holding
-                $current_subjects_query = "SELECT sub_id FROM subjects_holdings WHERE hold_id = ?";
-                $stmt = $connection->prepare($current_subjects_query);
+            if (isset($subjects)) {
+                $subjects_array = json_decode($subjects, true) ?? [];
+                
+                $delete_all_subjects = "DELETE FROM subjects_holdings WHERE hold_id = ?";
+                $stmt = $connection->prepare($delete_all_subjects);
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
-                $result = $stmt->get_result();
 
-                $current_sub_ids = [];
-                while ($row = $result->fetch_assoc()) {
-                    $current_sub_ids[] = $row['sub_id'];
-                }
-
-                // Get new subject IDs from input
-                $new_sub_ids = array_map(function ($subject) {
-                    return $subject['sub_id'];
-                }, $subjects_array);
-
-                // Find subjects to delete (exist in table but not in input)
-                $subjects_to_delete = array_diff($current_sub_ids, $new_sub_ids);
-
-                // Find subjects to add (exist in input but not in table)
-                $subjects_to_add = array_diff($new_sub_ids, $current_sub_ids);
-
-                // Delete subjects that are no longer present
-                if (!empty($subjects_to_delete)) {
-                    $placeholders = implode(',', array_fill(0, count($subjects_to_delete), '?'));
-                    $delete_query = "DELETE FROM subjects_holdings WHERE hold_id = ? AND sub_id IN ($placeholders)";
-                    
-                    $stmt = $connection->prepare($delete_query);
-                    $types = str_repeat('i', count($subjects_to_delete) + 1);
-                    $stmt->bind_param($types, $id, ...$subjects_to_delete);
-                    $stmt->execute();
-                }
-
-                // Add new subjects
-                if (!empty($subjects_to_add)) {
+                if (!empty($subjects_array)) {
                     $insert_query = "INSERT INTO subjects_holdings (hold_id, sub_id) VALUES (?, ?)";
                     $stmt = $connection->prepare($insert_query);
                     
-                    foreach ($subjects_to_add as $sub_id) {
-                        $stmt->bind_param("ii", $id, $sub_id);
+                    foreach ($subjects_array as $subject) {
+                        $stmt->bind_param("ii", $id, $subject['sub_id']);
                         $stmt->execute();
                     }
                 }
             }
 
-            if (!empty($authors)) {
-                $authors_array = json_decode($authors, true);
+            if (isset($authors)) {
+                $authors_array = json_decode($authors, true) ?? [];
 
-                // Get current authors for the holding
-                $current_authors_query = "SELECT author_id FROM holdings_authors WHERE hold_id = ?";
-                $stmt = $connection->prepare($current_authors_query);
+                $delete_all_query = "DELETE FROM holdings_authors WHERE hold_id = ?";
+                $stmt = $connection->prepare($delete_all_query);
                 $stmt->bind_param("i", $id);
                 $stmt->execute();
-                $result = $stmt->get_result();
 
-                $current_auth_ids = [];
-                while ($row = $result->fetch_assoc()) {
-                    $current_auth_ids[] = $row['author_id'];
-                }
-
-                // Get new author IDs from input
-                $new_auth_ids = array_map(function ($author) {
-                    return $author['author_id'];
-                }, $authors_array); 
-
-                // Find authors to delete (exist in table but not in input)
-                $authors_to_delete = array_diff($current_auth_ids, $new_auth_ids);
-
-                // Find authors to add (exist in input but not in table)
-                $authors_to_add = array_diff($new_auth_ids, $current_auth_ids);
-
-                // Delete authors that are no longer present
-                if (!empty($authors_to_delete)) {
-                    $placeholders = implode(',', array_fill(0, count($authors_to_delete), '?'));
-                    $delete_query = "DELETE FROM holdings_authors WHERE hold_id = ? AND author_id IN ($placeholders)";
-                    
-                    $stmt = $connection->prepare($delete_query);
-                    $types = str_repeat('i', count($authors_to_delete) + 1);
-                    $stmt->bind_param($types, $id, ...$authors_to_delete);
-                    $stmt->execute();
-                }
-
-                // Add new authors
-                if (!empty($authors_to_add)) {
+                if (!empty($authors_array)) {
                     $insert_query = "INSERT INTO holdings_authors (hold_id, author_id) VALUES (?, ?)";
                     $stmt = $connection->prepare($insert_query);
                     
-                    foreach ($authors_to_add as $auth_id) {
-                        $stmt->bind_param("ii", $id, $auth_id);
+                    foreach ($authors_array as $author) {
+                        $stmt->bind_param("ii", $id, $author['author_id']);
                         $stmt->execute();
                     }
                 }

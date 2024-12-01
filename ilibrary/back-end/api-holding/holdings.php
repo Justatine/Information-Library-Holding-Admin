@@ -16,9 +16,9 @@ try {
 
             $query = "SELECT a.*, c.author_id, e.dept_id, e.deptname
                         FROM holdings a 
-						INNER JOIN holdings_authors AS b
+						LEFT JOIN holdings_authors AS b
                         ON a.hold_id=b.hold_id
-                        INNER JOIN authors AS c
+                        LEFT JOIN authors AS c
                         ON b.author_id=c.author_id
                         INNER JOIN department e
                         ON a.department = e.dept_id
@@ -35,7 +35,7 @@ try {
                 
                 $subjectsQuery = "SELECT e.sub_id, e.sub_name, e.course
                                  FROM subjects e
-                                 INNER JOIN subjects_holdings b ON b.sub_id = e.sub_id
+                                 LEFT JOIN subjects_holdings b ON b.sub_id = e.sub_id
                                  WHERE b.hold_id = ?";
                 $subjectsSql = $connection->prepare($subjectsQuery);
                 $subjectsSql->bind_param("i", $id);
@@ -54,7 +54,7 @@ try {
 
                 $authorsQuery = "SELECT a.author_id, a.fname, a.lname
                                  FROM authors a
-                                 INNER JOIN holdings_authors AS ha 
+                                 LEFT JOIN holdings_authors AS ha 
                                  ON ha.author_id = a.author_id
                                  WHERE ha.hold_id = ?";
                 $authorsSql = $connection->prepare($authorsQuery);

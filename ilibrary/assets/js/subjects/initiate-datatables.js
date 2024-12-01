@@ -9,7 +9,7 @@ $(document).ready(function () {
         lengthChange: false,
         searching: true,
         ajax: {
-            url: url+'back-end/api-subject/?p=v1/subjects',
+            url: url+'api-subject/?p=v1/subjects',
             dataSrc: ''
         },
         columns: [
@@ -42,7 +42,7 @@ $(document).ready(function () {
         var data = {id:id}
         $.ajax({
             type: "DELETE",
-            url: url+"back-end/api-subject/delete-subject.php",
+            url: url+"api-subject/delete-subject.php",
             data: JSON.stringify(data),
             dataType: "json",
             success: function (response) {
@@ -78,7 +78,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "PUT",
-            url: url+'back-end/api-subject/edit-subject.php',
+            url: url+'api-subject/edit-subject.php',
             data: JSON.stringify(data),
             processData: false,
             contentType: false,  
@@ -111,7 +111,7 @@ $(document).ready(function () {
         $('#editModal').modal('show');
         $.ajax({
             type: 'GET',
-            url: url+'back-end/api-subject/get-subject.php',
+            url: url+'api-subject/get-subject.php',
             data: {id:subid},
             dataType: 'json',
             success: function(response) {
@@ -139,7 +139,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: url+'back-end/api-subject/add-subject.php',
+            url: url+'api-subject/add-subject.php',
             data: formData,
             processData: false,
             contentType: false,  

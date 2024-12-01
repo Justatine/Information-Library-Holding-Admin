@@ -2,7 +2,7 @@ $(document).ready(function () {
     function fetchDepartments() {
         $.ajax({
             type: "GET",
-            url: url+"back-end/api-department/departments.php",
+            url: url+"api-department/departments.php",
             dataType: "json",
             success: function (response) {
                 // console.log(response.data)
@@ -31,7 +31,7 @@ $(document).ready(function () {
         lengthChange: false,
         searching: true,
         ajax: {
-            url: url+'back-end/api-holding/holdings.php',
+            url: url+'api-holding/holdings.php',
             dataSrc: 'data',
             error: function (xhr, error, thrown) {
                 console.error('DataTables Ajax Error:', error, thrown);
@@ -69,7 +69,7 @@ $(document).ready(function () {
         var data = {id:id}
         $.ajax({
             type: "DELETE",
-            url: url+"back-end/api-holding/delete-holding.php",
+            url: url+"api-holding/delete-holding.php",
             data: JSON.stringify(data),
             dataType: "json",
             success: function (response) {
@@ -103,7 +103,7 @@ $(document).ready(function () {
         // Send JSON data via AJAX
         $.ajax({
             type: "PUT",
-            url: url + 'back-end/api-holding/update-holding.php',
+            url: url + 'api-holding/update-holding.php',
             data: JSON.stringify(data),
             contentType: "application/json", 
             processData: false, 
@@ -179,7 +179,7 @@ $(document).ready(function () {
         $('#editModal').modal('show');
         $.ajax({
             type: 'GET',
-            url: url + 'back-end/api-holding/holdings.php',
+            url: url + 'api-holding/holdings.php',
             data: { id: holdId },
             dataType: 'json',
             success: function(response) {
@@ -221,7 +221,7 @@ $(document).ready(function () {
     
         $.ajax({
             type: "POST",
-            url: url + 'back-end/api-holding/add-holding.php',
+            url: url + 'api-holding/add-holding.php',
             data: formData,
             processData: false, 
             contentType: false, 
