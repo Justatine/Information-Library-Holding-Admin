@@ -76,8 +76,10 @@ try {
             }
         }
         else{
-            $query = "SELECT a.*
-                        FROM holdings AS a";
+            $query = "SELECT a.*, e.deptname    
+                        FROM holdings AS a
+                        LEFT JOIN department e
+                        ON a.department = e.dept_id";
             $sql=$connection->prepare($query);
             $sql->execute();
             $result=$sql->get_result();

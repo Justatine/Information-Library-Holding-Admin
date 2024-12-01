@@ -46,7 +46,7 @@ $(document).ready(function () {
             { data: 'copies' },
             { data: 'av_copies' },
             { data: 'course', visible: true },
-            { data: 'department' },
+            { data: 'deptname' },
             {
                 data: null,
                 render: function (data, type, row) {
